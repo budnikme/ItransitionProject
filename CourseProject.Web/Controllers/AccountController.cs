@@ -130,6 +130,10 @@ public class AccountController : Controller
         {
             return LocalRedirect(returnUrl);
         }
+        if (signInResult.IsLockedOut)
+        {
+            return RedirectToAction(nameof(Lockout));
+        }
         var email = info.Principal.FindFirstValue(ClaimTypes.Email);
         if (email == null) return View("Error");
         var user = await _userManager.FindByEmailAsync(email);
