@@ -32,7 +32,8 @@ public class CollectionService : ICollectionService
 
     public async Task<byte[]> GenerateCsv(int collectionId)
     {
-        var collectionItems = await _context.Items.Include(i=>i.Tags).Where(i => i.Collection.Id == collectionId).ToListAsync();
+        var collectionItems = await _context.Items.Include(i => i.Tags).Where(i => i.Collection.Id == collectionId)
+            .ToListAsync();
         var items = GenerateCsvObject(collectionItems);
         var csv = CsvSerializer.SerializeToCsv(items);
         return new UTF8Encoding().GetBytes(csv);
@@ -99,8 +100,9 @@ public class CollectionService : ICollectionService
     public async Task<FullCollectionModel> GetCollection(int collectionId)
     {
         return _mapper.Map<FullCollectionModel>(await _context.Collections.Include(c => c.Topic)
-            .Include(c => c.User)
-            .Where(c => c.Id == collectionId).FirstOrDefaultAsync()) ?? throw new KeyNotFoundException("Collection not found");
+                   .Include(c => c.User)
+                   .Where(c => c.Id == collectionId).FirstOrDefaultAsync()) ??
+               throw new KeyNotFoundException("Collection not found");
     }
 
     public async Task<int> AddCollection(AddCollectionModel collection)
@@ -148,16 +150,17 @@ public class CollectionService : ICollectionService
     private void ChangeEditedFields(List<string> fieldsToDelete, Dictionary<string, CustomField> fieldsToAdd,
         int collectionId)
     {
-        if (fieldsToAdd.Count > 0)
-            AddFieldsToItems(fieldsToAdd, collectionId);
         if (fieldsToDelete.Count > 0)
             DeleteFieldsFromItems(fieldsToDelete, collectionId);
+        if (fieldsToAdd.Count > 0)
+            AddFieldsToItems(fieldsToAdd, collectionId);
     }
 
     private Dictionary<string, CustomField> GetFieldsToAdd(Dictionary<string, string>? oldFields,
         Dictionary<string, string> newFields)
     {
-        return newFields.Where(f => !oldFields.ContainsKey(f.Key))
+        return newFields.Where(f =>
+                !oldFields.ContainsKey(f.Key) || oldFields.ContainsKey(f.Key) && oldFields[f.Key] != f.Value)
             .ToDictionary(f => f.Key, f => new CustomField {Type = f.Value, Value = ""});
     }
 
