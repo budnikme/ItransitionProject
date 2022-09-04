@@ -1,0 +1,53 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model IEnumerable<CourseProject.Domain.Models.UserModel>
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="col-md-6 control-buttons">
+    <button id="block-button" type="button" class="btn btn-danger" onclick="changeUserStatus(false)">@Loc["Block"]</button>
+    <button id="unblock-button" type="button" class="btn btn-success" onclick="changeUserStatus(true)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-slash-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.093 3.093c-.465 4.275.885 7.46 2.513 9.589a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.32 11.32 0 0 0 1.733-1.525L1.093 3.093zm12.215 8.215L3.128 1.128A61.369 61.369 0 0 1 5.073.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.483 3.626-.332 6.491-1.551 8.616zm.338 3.046-13-13 .708-.708 13 13-.707.707z"/>
+        </svg>
+    </button>
+    <button id="delete-button" type="button" class="btn btn-warning">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+        </svg>
+    </button>
+    <button id="add-admin" type="button" class="btn btn-success" onclick="setRoles('Admin')">@Loc["Add to admins"]</button>
+    <button id="remove-admin" type="button" class="btn btn-danger" onclick="setRoles('User')">@Loc["Remove from admins"]</button>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">
+            <input class="form-check-input" id="checkAll" type="checkbox">
+        </th>
+        <th scope="col">UUID</th>
+        <th scope="col">@Loc["Username"]</th>
+        <th scope="col">Email</th>
+        <th scope="col">@Loc["Role"]</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody class="table-body">
+    @{
+        foreach (var user in Model)
+        {
+            <tr id="@user.Id">
+                <th scope="col">
+                    <input class="form-check-input" type="checkbox" name="userCheckBox" value="@user.Id">
+                </th>
+                <th scope="row">@user.Id</th>
+                <td><a href="@Url.Action("Index","User",new{userId=user.Id})">@user.UserName</a></td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td id="status">@user.Status</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

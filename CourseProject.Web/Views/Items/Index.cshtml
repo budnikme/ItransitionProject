@@ -1,0 +1,9 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model IEnumerable<CourseProject.Domain.Models.ItemModel>
+
+@{
+    ViewData["Title"] = @Loc["Title"];
+
+}
+@await Html.PartialAsync("_ItemGroup", Model)
+    

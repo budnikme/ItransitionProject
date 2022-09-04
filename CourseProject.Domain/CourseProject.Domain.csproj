@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Models\AccountViewModels\RegisterViewModel.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>RegisterViewModel.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Models\AccountViewModels\LoginViewModel.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>LoginViewModel.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Models\AddModels\AddCollectionModel.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>AddCollectionModel.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Models\AddModels\AddItemModel.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>AddItemModel.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\Models\AccountViewModels\RegisterViewModel.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>RegisterViewModel.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Models\AccountViewModels\LoginViewModel.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>LoginViewModel.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Models\AddModels\AddCollectionModel.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AddCollectionModel.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Models\AddModels\AddItemModel.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AddItemModel.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Title" xml:space="preserve">
+        <value>Strona główna</value>
+    </data>
+    <data name="Last items" xml:space="preserve">
+        <value>Ostatnie itemy</value>
+    </data>
+    <data name="All items" xml:space="preserve">
+        <value>Wszystkie itemy</value>
+    </data>
+    <data name="Top largest collections" xml:space="preserve">
+        <value>Największe kolekcje</value>
+    </data>
+    <data name="All collections" xml:space="preserve">
+        <value>Wszystkie kolekcje</value>
+    </data>
+</root>

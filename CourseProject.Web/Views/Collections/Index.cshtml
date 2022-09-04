@@ -1,0 +1,25 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model IEnumerable<CourseProject.Domain.Models.CollectionModel>
+@{
+    ViewData["Title"] = @Loc["Collections"];
+}
+
+@if (Model.Any())
+{
+    <h1>@Loc["Collections"]</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @{
+            foreach (var collection in Model)
+            {
+                <div class="col">
+                    @await Html.PartialAsync("_CollectionCard", collection)
+                </div>
+            }
+        }
+    </div>
+    <partial name="_Pagination"/>
+}
+else
+{
+    <h1>@Loc["There no items"]</h1>
+}

@@ -1,0 +1,40 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var queries = ViewContext.HttpContext.Request.Query;
+    var queryString = queries.Where(q => q.Key != "page").Aggregate("", (current, query) => current + $"&{query.Key}={query.Value}");
+}
+
+@if (ViewBag.PagesCount > 1)
+{
+    <br/>
+    <nav aria-label="Pages">
+        <ul class="pagination">
+            @{
+                if (ViewBag.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action(action, controller, new {page = ViewBag.CurrentPage - 1})@queryString">Previous</a>
+                    </li>
+                }
+                for (var i = 1; i <= ViewBag.PagesCount; i++)
+                {
+                    <li class="page-item @IsActive(i)">
+                        <a class="page-link" href="@Url.Action(action, controller, new {page = i})@queryString">@i</a>
+                    </li>
+                }
+                if (ViewBag.CurrentPage < ViewBag.PagesCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action(action, controller, new {page = ViewBag.CurrentPage - 1})@queryString">Next</a>
+                    </li>
+                }
+
+                string IsActive(int i)
+                {
+                    return ViewBag.CurrentPage == i ? "active" : string.Empty;
+                }
+            }
+        </ul>
+    </nav>
+}

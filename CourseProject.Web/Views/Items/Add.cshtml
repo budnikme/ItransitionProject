@@ -1,0 +1,91 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model CourseProject.Domain.Models.AddModels.AddItemModel
+@{
+    ViewData["Title"] = Loc["Title"];
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/selectize.bootstrap5.css"/>
+    <link rel="stylesheet" type="text/css" href="~/css/add-collection.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+}
+
+@section Scripts{
+    <script>
+    let localization = {
+        int_field: "@Loc["Integer field"]",
+        string_field: "@Loc["String field"]",
+        bool_field: "@Loc["Boolean field"]",
+        date_field: "@Loc["Date field"]",
+        text_field: "@Loc["Text field"]",
+        remove_field: "@Loc["Remove field"]",
+    };
+    </script>
+    <script>let searchTagUrl = '@Url.Action("Search", "Tag")';</script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script type="text/javascript" src="~/lib/selectize.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="~/js/add-item.js"></script>
+}
+
+<div class="col-sm-10 mx-auto">
+    <h1>@Loc["Add new item"]</h1>
+    <section>
+        <form id="add-collection" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CollectionId" value="@ViewBag.CollectionId">
+            <label asp-for="Name" class="form-label">@Loc["Name"]:</label>
+            <div class="form-floating">
+                <div class="input-group">
+                    <input required asp-for="Name" type="text" class="form-control" placeholder="@Loc["Enter title"]">
+                </div>
+
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <label for="tags" asp-for="Tags">@Loc["Tags"]:</label>
+            <div class="form-floating">
+                <input required type="text" id="tags" asp-for="Tags" placeholder="@Loc["Enter tags"]">
+            </div>
+
+            @{
+                Dictionary<string, string> customFieldsModel = ViewBag.CustomFieldsModel;
+                if (customFieldsModel != null)
+                {
+                    for (var i = 0; i < customFieldsModel.Count; i++)
+                    {
+                        var fieldName = customFieldsModel.ElementAt(i).Key;
+                        var fieldType = customFieldsModel.ElementAt(i).Value;
+                        <label for="@fieldName">@fieldName:</label>
+                        <div class="form-floating">
+                            <input type="hidden" value="@fieldName" name="CustomFields[@i].Key">
+                            <input type="hidden" value="@fieldType" name="CustomFields[@i].Value.Type">
+                            <div class="input-group">
+                                @switch (fieldType)
+                                {
+                                    case "textarea":
+                                        <textarea required id="@fieldName" class="form-control" rows="3" name="CustomFields[@i].Value.Value"></textarea>
+                                        break;
+                                    case "checkbox":
+                                        <input type="checkbox" id="flexCheckDefault" class="form-check-input" name="CustomFields[@i].Value.Value">
+                                        break;
+                                    case "date":
+                                        <input type="text" id="date-field" class="form-control" name="CustomFields[@i].Value.Value">
+                                        break;
+                                    default:
+                                        <input required type="@fieldType" id="@fieldName" class="form-control" placeholder="Enter @fieldName" name="CustomFields[@i].Value.Value">
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+
+            <div>
+                <button id="collection-submit" type="submit" class="w-50 btn btn-lg btn-primary">@Loc["AddButton"]</button>
+            </div>
+        </form>
+    </section>
+</div>

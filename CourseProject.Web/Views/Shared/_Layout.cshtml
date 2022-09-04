@@ -1,0 +1,112 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Course Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/dark-mode.css">
+    <link rel="stylesheet" href="~/CourseProject.Web.styles.css" asp-append-version="true"/>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                <ul class="navbar-nav flex-grow-1">
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">@Loc["Admin page"]</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Collections" asp-action="Index">@Loc["Collections"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Index">@Loc["Items"]</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-inline d-none d-sm-block navbar-nav ms-auto mb-2 mb-lg-0">
+                <form action="@Url.Action("Search", "Items")" class="align-middle row g-3">
+                <div class="col-auto">
+                <input name="searchString" class="form-control" id="search" placeholder="@Loc["Type here to search"]">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">@Loc["SearchButton"]</button>
+                    </div>
+                </form>
+            </div>
+            <div class="d-inline navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav">
+                    <partial name="_LoginPartial"/>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+<br/>
+
+
+<footer class="d-inline border-top footer text-muted">
+    <div class="container-fluid">
+        <div class="float-start">
+            <p>CourseProject</p>
+        </div>
+        <div class="float-end">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <div class="form-check form-switch ms-auto mt-3 me-3">
+                        <input class="form-check-input" type="checkbox" id="lightSwitch"/>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        class="bi bi-brightness-high"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                </li>
+                <li class="list-inline-item">
+                    <partial name="_Culture"/>
+                </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/dark-mode-switch.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

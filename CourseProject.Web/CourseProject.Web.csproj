@@ -1,0 +1,333 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+      <PackageReference Include="Azure.Identity" Version="1.6.1" />
+      <PackageReference Include="Azure.Search.Documents" Version="11.3.0" />
+      <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.3.0" />
+      <PackageReference Include="Azure.Storage.Blobs" Version="12.13.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.8" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
+      <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.8" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Azure" Version="1.4.0" />
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CourseProject.Common\CourseProject.Common.csproj" />
+      <ProjectReference Include="..\CourseProject.Dal\CourseProject.Dal.csproj" />
+      <ProjectReference Include="..\CourseProject.Domain\CourseProject.Domain.csproj" />
+      <ProjectReference Include="..\CourseProject.Service\CourseProject.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Views\Admin" />
+      <Folder Include="Views\Items" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Email.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account1\AccessDenied.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account1\Lockout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account1\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account1\Register.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Views\Home\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_LoginPartial.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_LoginPartial.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\AccessDenied.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>AccessDenied.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\ExternalLogin.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ExternalLogin.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\Lockout.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Lockout.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\Login.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Login.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\Register.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Register.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\SignedOut.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SignedOut.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Admin\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Collections\Add.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Add.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Collections\Delete.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Delete.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Collections\Edit.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Edit.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Collections\Full.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Full.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Collections\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Home\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Items\Add.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Add.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Items\Edit.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Edit.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Items\Full.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Full.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Items\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Items\Search.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Search.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_CollectionCard.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_CollectionCard.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_CollectionGroup.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_CollectionGroup.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_ItemCard.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_ItemCard.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_ItemGroup.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_ItemGroup.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_Layout.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\User\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Error\PageNotFound.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>PageNotFound.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Error\Forbidden.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Forbidden.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\Error.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Error.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\Views\Home\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_LoginPartial.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_LoginPartial.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\AccessDenied.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AccessDenied.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\ExternalLogin.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ExternalLogin.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\Lockout.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Lockout.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\Login.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Login.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\Register.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Register.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\SignedOut.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SignedOut.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Admin\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Collections\Add.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Add.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Collections\Delete.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Delete.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Collections\Edit.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Edit.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Collections\Full.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Full.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Collections\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Home\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Items\Add.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Add.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Items\Edit.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Edit.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Items\Full.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Full.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Items\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Items\Search.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Search.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_CollectionCard.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_CollectionCard.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_CollectionGroup.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_CollectionGroup.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_ItemCard.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_ItemCard.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_ItemGroup.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ItemGroup.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_Layout.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_Layout.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\User\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Error\PageNotFound.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PageNotFound.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Error\Forbidden.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Forbidden.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\Error.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Error.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

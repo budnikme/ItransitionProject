@@ -1,0 +1,10 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@{
+    ViewData["Title"] = Loc["Title"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<p>
+    
+    @Loc["Text"].
+</p>

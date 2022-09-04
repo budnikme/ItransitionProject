@@ -1,0 +1,9 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model CourseProject.Domain.Models.UserPageModel
+@{
+    ViewData["Title"] = Loc["Title"];
+}
+
+@await Html.PartialAsync("_CollectionGroup", Model.Collections)
+@await Html.PartialAsync("_ItemGroup", Model.Items)
+

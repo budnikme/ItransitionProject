@@ -1,0 +1,25 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model CourseProject.Domain.Models.ItemModel
+
+<div class="card-body">
+    <h5 class="card-title">
+        <a href="@Url.Action("Full", "Items", new {itemId = Model.Id})">@Model.Name</a>
+    </h5>
+    <p class="card-text">@Loc["Collection"]: @Model.CollectionName</p>
+    <p class="card-text">@Loc["Author"]: @Model.UserName</p>
+    @foreach (var field in Model.CustomFields.Where(field => field.Value.Type is "text" or "date"))
+    {
+        <p class="card-text">@field.Key: @field.Value.Value</p>
+    }
+</div>
+<div class="card-footer">
+    @if (User.IsInRole("Admin") || Model.IsOwner)
+    {
+        <a class="btn btn-primary" href="@Url.Action("Edit", "Items", new {itemId = Model.Id})">@Loc["EditButton"]</a>
+        <a class="btn btn-danger" href="@Url.Action("Delete", "Items", new {itemId = Model.Id})">@Loc["DeleteButton"]</a>
+    }
+    <p class="card-text">
+        <small class="text-muted">@Loc["Created"]: @Model.CreatedDate</small>
+    </p>
+
+</div>

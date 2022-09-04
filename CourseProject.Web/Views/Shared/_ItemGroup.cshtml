@@ -1,0 +1,21 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model IEnumerable<CourseProject.Domain.Models.ItemModel>
+@if (Model.Any())
+{
+    <h1>Items</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    @await Html.PartialAsync("_ItemCard", item)
+                </div>
+            </div>
+        }
+    </div>
+    <partial name="_Pagination"/>
+}
+else
+{
+    <h1>@Loc["There are no items"]</h1>
+}

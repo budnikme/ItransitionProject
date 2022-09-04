@@ -1,0 +1,17 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+
+@model CourseProject.Domain.Models.ErrorViewModel
+@{
+    ViewData["Title"] = Loc["Title"];
+}
+
+<h1 class="text-danger">@Loc["Title"].</h1>
+<h2 class="text-danger">@Loc["Title"].</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+

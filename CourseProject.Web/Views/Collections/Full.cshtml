@@ -1,0 +1,89 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model CourseProject.Domain.Models.FullCollectionModel
+
+@{
+    ViewData["Title"] = Loc["Collection"];
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        $("#sortBy option[value='@ViewBag.SortBy']").prop('selected', true);
+        $("#sortOrder option[value='@ViewBag.SortOrder']").prop('selected', true);
+        document.getElementById('description').innerHTML = marked.parse('@Model.Description');
+        function sort(){
+            let sortBy = $("#sortBy option:selected").val();
+            let sortOrder = $("#sortOrder option:selected").val();
+            window.location.href = "@Url.Action("Full", "Collections", new {collectionId = Model.Id})" + "?sortBy=" + sortBy + "&sortOrder=" + sortOrder;
+        }
+      </script>
+}
+
+<div class="card mb-3">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="Image">
+    <div class="card-body">
+        @if (User.IsInRole("Admin") || Model.IsOwner)
+        {
+            <a class="btn btn-info" href="@Url.Action("Add", "Items", new {collectionId = Model.Id})">@Loc["Add item"]</a>
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Collections", new {collectionId = Model.Id})">@Loc["Edit"]</a>
+            <a class="btn btn-danger" href="@Url.Action("Delete", "Collections", new {collectionId = Model.Id})">@Loc["Delete"]</a>
+        }
+        <a class="btn btn-success" href="@Url.Action("DownloadCsv", "Collections", new {collectionId = Model.Id})">@Loc["DownloadCsv"]</a>
+
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Loc["Topic"]: @Model.Topic</p>
+        <p class="card-text">@Loc["Author"]: @Model.UserName</p>
+        <p class="card-text" id="description"></p>
+        <p class="card-text">
+            <small class="text-muted">@Loc["Created"]: @Model.CreatedDate</small>
+        </p>
+    </div>
+</div>
+
+
+@if (Model.Items!.Any())
+{
+    <h1>Items</h1>
+    <select id="sortBy" onchange="sort();">
+        <option value="name">@Loc["Name"]</option>
+        <option value="date">@Loc["Date"]</option>
+        <option value="likes">@Loc["Likes"]</option>
+    </select>
+    <select id="sortOrder" onchange="sort();">
+        <option value="asc">@Loc["Ascending"]</option>
+        <option value="dsc">@Loc["Descending"]</option>
+    </select>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model.Items!)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="@Url.Action("Full", "Items", new {itemId = item.Id})">@item.Name</a>
+                        </h5>
+                        <p class="card-text">@Loc["Collection"]: @item.CollectionName</p>
+                        <p class="card-text">@Loc["Author"]: @item.UserName</p>
+                        @foreach (var field in item.CustomFields)
+                        {
+                            <p class="card-text">@field.Key: @field.Value.Value</p>
+                        }
+                        @if (User.IsInRole("Admin") || item.IsOwner)
+                        {
+                            <a class="btn btn-primary" href="@Url.Action("Edit", "Items", new {itemId = item.Id})">@Loc["Edit"]</a>
+                            <a class="btn btn-danger" href="@Url.Action("Delete", "Items", new {itemId = item.Id})">@Loc["Delete"]</a>
+                        }
+                        <p class="card-text">
+                            <small class="text-muted">@Loc["Created"]: @item.CreatedDate</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <partial name="_Pagination"/>
+}
+else
+{
+    <h1>@Loc["There are no items"]</h1>
+}

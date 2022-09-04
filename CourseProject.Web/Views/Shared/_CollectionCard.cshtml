@@ -1,0 +1,25 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model CourseProject.Domain.Models.CollectionModel
+
+<div class="card">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="Image">
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="@Url.Action("Full", "Collections", new {collectionId = Model.Id})">@Model.Name</a>
+        </h5>
+        <p class="card-text">@Loc["Topic"]: @Model.Topic</p>
+        <p class="card-text">@Loc["Author"]: @Model.UserName</p>
+
+    </div>
+    <div class="card-footer">
+        @if (User.IsInRole("Admin") || Model.IsOwner)
+        {
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Collections", new {collectionId = Model.Id})">@Loc["EditButton"]</a>
+            <a class="btn btn-danger" href="@Url.Action("Delete", "Collections", new {collectionId = Model.Id})">@Loc["DeleteButton"]</a>
+        }
+        <p class="card-text">
+            <small class="text-muted">@Loc["Created"]: @Model.CreatedDate</small>
+        </p>
+
+    </div>
+</div>

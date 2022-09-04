@@ -1,0 +1,113 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@using Microsoft.AspNetCore.Identity
+@using CourseProject.Dal.Entities
+@model CourseProject.Domain.Models.ItemModel
+
+@inject SignInManager<User> SignInManager
+@{
+    ViewData["Title"] = "Item";
+}
+
+@section Scripts
+{
+    <script>
+    const itemId = @Model.Id;
+    </script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/comments.js"></script>
+    <script src="~/js/fullItem.js"></script>
+}
+
+<div class="card mb-3">
+    <div class="card-body">
+        @if (User.IsInRole("Admin") || Model.IsOwner)
+        {
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Items", new {itemId = Model.Id})">@Loc["EditButton"]</a>
+            <a class="btn btn-danger" href="@Url.Action("Delete", "Items", new {itemId = Model.Id})">@Loc["DeleteButton"]</a>
+        }
+
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Loc["Collection"]: @Model.CollectionName</p>
+        <p class="card-text">@Loc["Author"]: @Model.UserName</p>
+        <p class="card-text">@Loc["Tags"]: @Model.Tags</p>
+        @foreach (var field in Model.CustomFields)
+        {
+            if(field.Value.Type=="checkbox"){
+                    if(field.Value.Value=="on"){
+                        <p class="card-text">@field.Key: @Loc["Yes"]</p>
+                    }
+                    else{
+                        <p class="card-text">@field.Key: @Loc["No"]</p>
+                    }
+                }else{
+                    <p class="card-text">@field.Key: @field.Value.Value</p>
+                }
+            
+        }
+        <button id="like-button" data-item-id="@Model.Id" type="button" class="btn btn-light d-inline">
+            <div id="like-icon" class="d-inline">
+                @if (Model.IsLikedByCurrentUser)
+                {
+                    <svg width="24" height="24" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <defs></defs>
+                        <g id="liked" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Dribbble-Light-Preview" transform="translate(-259.000000, -760.000000)" fill="#000000">
+                                <g id="icons" transform="translate(56.000000, 160.000000)">
+                                    <path d="M203,620 L207.200006,620 L207.200006,608 L203,608 L203,620 Z M223.924431,611.355 L222.100579,617.89 C221.799228,619.131 220.638976,620 219.302324,620 L209.300009,620 L209.300009,608.021 L211.104962,601.825 C211.274012,600.775 212.223214,600 213.339366,600 C214.587817,600 215.600019,600.964 215.600019,602.153 L215.600019,608 L221.126177,608 C222.97313,608 224.340232,609.641 223.924431,611.355 L223.924431,611.355 Z" id="like-[#1385]"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                }
+                else
+                {
+                    <svg id="not-liked" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <defs>
+                            <style>.a{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}</style>
+                        </defs><title>Like</title><path class="a" d="M20,15.659h0a1.5,1.5,0,1,1,0,3H19a1.5,1.5,0,0,1,1.5,1.5c0,.829-.672,1-1.5,1H12.5c-2.851,0-3.5-.5-7-1v-8.5c2.45,0,6.5-4.5,6.5-8.5,0-1.581,2.189-2.17,3,.719.5,1.781-1,5.281-1,5.281h8a1.5,1.5,0,0,1,1.5,1.5c0,.829-.672,2-1.5,2H21a1.5,1.5,0,0,1,0,3H20"/><rect class="a" x="0.5" y="10.159" width="5" height="12"/><path d="M3.25,19.159a.75.75,0,1,0,.75.75.75.75,0,0,0-.75-.75Z"/>
+                    </svg>
+                }
+            </div>
+            <p id="likes-count" class="d-inline">
+                @Model.LikesCount
+            </p>
+
+        </button>
+        <p class="card-text">
+            <small class="text-muted">@Loc["Created"]: @Model.CreatedDate</small>
+        </p>
+    </div>
+</div>
+<h1>@Loc["Comments"]</h1>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div id="send-comments">
+
+        <div class="mb-3">
+            <textarea class="form-control" name="Body" id="comment-message" rows="3" placeholder="Your comment" required></textarea>
+        </div>
+        <button id="send-comment" type="submit" class="btn btn-primary">@Loc["Send"]</button>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <p>@Loc["You need"] <a href="@Url.Action("Login", "Account")">@Loc["Login"]</a> @Loc["send comments"]</p>
+    </div>
+}
+
+<div id="comments">
+    @foreach (var comment in ViewBag.Comments)
+    {
+        <br/>
+        <div class="card">
+            <div class="card-header">
+                @comment.CreatedDate
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@comment.UserName</h5>
+                <p class="card-text">@comment.Text</p>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,45 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@model CourseProject.Domain.Models.HomeModel
+
+@{
+    ViewData["Title"] = @Loc["Home Page"];
+}
+
+@section Scripts
+{
+    <script src="~/lib/jquery.tagcloud.js"></script>
+    <script>
+    $("#tagcloud a").tagcloud({
+      size: {start: 12, end: 36, unit: "px"},
+      color: {start: '#3498DB', end: '#46CFB0'}
+    });
+    </script>
+
+
+}
+
+<h1>@Loc["Last items"]</h1>
+<div class="card-group">
+    @foreach (var item in Model.Items)
+    {
+        <div class="card">
+            @await Html.PartialAsync("_ItemCard", item)
+        </div>
+    }
+</div>
+<a href="@Url.Action("Index", "Items")" class="btn btn-primary">@Loc["All items"]</a>
+
+<h1>@Loc["Top largest collections"]</h1>
+<div class="card-group">
+    @foreach (var collection in Model.Collections)
+    {
+        @await Html.PartialAsync("_CollectionCard", collection)
+    }
+</div>
+<a href="@Url.Action("Index", "Collections")" class="btn btn-primary">@Loc["All collections"]</a>
+<div id="tagcloud">
+    @foreach (var tag in Model.Tags)
+    {
+        <a href="@Url.Action("Search", "Items", new {searchString = $"filter=Tags any {tag.Name}"})" rel="@tag.ItemsCount">@tag.Name</a>
+    }
+</div>

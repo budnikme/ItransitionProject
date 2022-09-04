@@ -1,0 +1,115 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Loc;
+@using System.Linq;
+@model CourseProject.Domain.Models.AddModels.AddCollectionModel;
+
+@{
+    ViewData["Title"] = Loc["Edit"];
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/selectize.bootstrap5.css"/>
+    <link rel="stylesheet" type="text/css" href="~/css/add-collection.css"/>
+}
+
+@section Scripts{
+    
+    <script>
+    let localization = {
+                    int_field: "@Loc["Integer field"]",
+                    string_field: "@Loc["String field"]",
+                    bool_field: "@Loc["Boolean field"]",
+                    date_field: "@Loc["Date field"]",
+                    text_field: "@Loc["Text field"]",
+                    remove_field: "@Loc["Remove field"]",
+                    upload_image: "@Loc["Upload image"]",
+                };
+    let searchTagUrl = '@Url.Action("Search", "Tag")';
+    let descriptionValue = '@ViewBag.Collection.Description';
+    </script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script type="text/javascript" src="~/lib/selectize.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap-filestyle.min.js"></script>
+    <script src="~/js/add-collection.js"></script>
+    <script>
+    simplemde.value(descriptionValue);
+    for(let i=0; i<selectedFields.length; i++){
+        $('#field-select-'+selectedFields[i].id).val(selectedFields[i].value);
+    }
+    fieldCounter=dictionaryCount;
+    </script>
+}
+
+<div class="col-sm-10 mx-auto">
+    <h1>@Loc["Edit collection"]</h1>
+    <section>
+        <form id="add-collection" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="Name" class="form-label">@Loc["Title"]:</label>
+            <div class="form-floating">
+                <div class="input-group">
+                    <input asp-for="Name" type="text" class="form-control" value="@ViewBag.Collection.Name">
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <label for="topic" asp-for="TopicId">@Loc["Topic"]:</label>
+            <div class="form-floating">
+                <select asp-for="TopicId" asp-items="@ViewBag.Topics" id="topic">
+                    <option value="">@Loc["Select topic"]</option>
+                </select>
+
+            </div>
+
+            <label for="custom-fields">@Loc["Custom fields"]:</label>
+            <button id="add-field" type="button" class="btn btn-primary">@Loc["Add field"]</button>
+            <div class="custom-fields">
+                @{
+                    Dictionary<string, string> fields = ViewBag.Collection.CustomFieldsModel;
+                    <script>
+                        let dictionaryCount = @fields.Count;
+                        let selectedFields = [];
+                        let field={
+                            id: 0,
+                            value: ''
+                        };
+                    </script>
+                    for (var i = 0; i < fields.Count; i++)
+                    {
+                        <div class="form-floating" id="custom-field-@i">
+                            <input id="custom-fields" type="text" name="CustomFieldsModel[@i].Key" value="@fields.ElementAt(i).Key"/>
+                            <select id="field-select-@i" name="CustomFieldsModel[@i].Value">
+                                <option value="number">@Loc["Integer field"]</option>
+                                <option value="text">@Loc["String field"]</option>
+                                <option value="textarea">@Loc["Text field"]</option>
+                                <option value="checkbox">@Loc["Boolean field"]</option>
+                                <option value="date">@Loc["Date field"]</option>
+                            </select>
+                            <script>
+                            field.id = @i;
+                            field.value = '@fields.ElementAt(i).Value';
+                            selectedFields.push(field)
+                                                                
+                            </script>
+                            <button id="@i" type="button" class="remove-field-button btn btn-danger">@Loc["Remove field"]</button>
+                        </div>
+                    }
+                }
+            </div>
+
+
+            <label asp-for="Description" class="form-label">@Loc["Description"]:</label>
+            <div class="form-floating">
+                <textarea asp-for="Description" id="description" name="description" rows="4" cols="50"></textarea>
+            </div>
+            <br/>
+            <div class="form-floating">
+                <img src="@ViewBag.Collection.ImageUrl" class="img-fluid" alt="image">
+                <input asp-for="Image" id="upload" type="file" class="form-control border-0" accept="image/x-png,image/gif,image/jpeg">
+            </div>
+            <div>
+                <button id="collection-submit" type="submit" class="w-50 btn btn-lg btn-primary">@Loc["Save"]</button>
+            </div>
+        </form>
+    </section>
+</div>

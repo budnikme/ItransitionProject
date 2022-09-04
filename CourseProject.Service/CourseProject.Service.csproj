@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CourseProject.Common\CourseProject.Common.csproj" />
+      <ProjectReference Include="..\CourseProject.Dal\CourseProject.Dal.csproj" />
+      <ProjectReference Include="..\CourseProject.Domain\CourseProject.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Search.Documents" Version="11.3.0" />
+      <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
+      <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.2.3" />
+      <PackageReference Include="ServiceStack.Text" Version="6.3.0" />
+      <PackageReference Include="Wiry.Base32" Version="1.1.1" />
+    </ItemGroup>
+
+</Project>
