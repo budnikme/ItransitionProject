@@ -34,9 +34,6 @@
     <script src="~/js/add-collection.js"></script>
     <script>
     simplemde.value(descriptionValue);
-    for(let i=0; i<selectedFields.length; i++){
-        $('#field-select-'+selectedFields[i].id).val(selectedFields[i].value);
-    }
     fieldCounter=dictionaryCount;
     </script>
 }
@@ -65,32 +62,30 @@
             <button id="add-field" type="button" class="btn btn-primary">@Loc["Add field"]</button>
             <div class="custom-fields">
                 @{
+                    string IsSelected(string value, string selectValue)
+                    {
+                        if(value == selectValue)
+                        {
+                            return "selected";
+                        }
+                        return "";
+                    }
                     Dictionary<string, string> fields = ViewBag.Collection.CustomFieldsModel;
                     <script>
                         let dictionaryCount = @fields.Count;
-                        let selectedFields = [];
-                        let field={
-                            id: 0,
-                            value: ''
-                        };
                     </script>
                     for (var i = 0; i < fields.Count; i++)
                     {
+                        var fieldType = fields.ElementAt(i).Value;
                         <div class="form-floating" id="custom-field-@i">
                             <input id="custom-fields" type="text" name="CustomFieldsModel[@i].Key" value="@fields.ElementAt(i).Key"/>
                             <select id="field-select-@i" name="CustomFieldsModel[@i].Value">
-                                <option value="number">@Loc["Integer field"]</option>
-                                <option value="text">@Loc["String field"]</option>
-                                <option value="textarea">@Loc["Text field"]</option>
-                                <option value="checkbox">@Loc["Boolean field"]</option>
-                                <option value="date">@Loc["Date field"]</option>
+                                <!option @IsSelected(fieldType,"number") value="number">@Loc["Integer field"]</!option>
+                                <!option @IsSelected(fieldType,"text") value="text">@Loc["String field"]</!option>
+                                <!option @IsSelected(fieldType,"textarea") value="textarea">@Loc["Text field"]</!option>
+                                <!option @IsSelected(fieldType,"checkbox") value="checkbox">@Loc["Boolean field"]</!option>
+                                <!option @IsSelected(fieldType,"date") value="date">@Loc["Date field"]</!option>
                             </select>
-                            <script>
-                            field.id = @i;
-                            field.value = '@fields.ElementAt(i).Value';
-                            selectedFields.push(field)
-                                                                
-                            </script>
                             <button id="@i" type="button" class="remove-field-button btn btn-danger">@Loc["Remove field"]</button>
                         </div>
                     }
