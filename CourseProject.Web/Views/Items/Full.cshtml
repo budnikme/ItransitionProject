@@ -32,17 +32,21 @@
         <p class="card-text">@Loc["Tags"]: @Model.Tags</p>
         @foreach (var field in Model.CustomFields)
         {
-            if(field.Value.Type=="checkbox"){
-                    if(field.Value.Value=="on"){
-                        <p class="card-text">@field.Key: @Loc["Yes"]</p>
-                    }
-                    else{
-                        <p class="card-text">@field.Key: @Loc["No"]</p>
-                    }
-                }else{
-                    <p class="card-text">@field.Key: @field.Value.Value</p>
+            if (field.Value.Type == "checkbox")
+            {
+                if (field.Value.Value == "on")
+                {
+                    <p class="card-text">@field.Key: @Loc["Yes"]</p>
                 }
-            
+                else
+                {
+                    <p class="card-text">@field.Key: @Loc["No"]</p>
+                }
+            }
+            else
+            {
+                <p class="card-text">@field.Key: @field.Value.Value</p>
+            }
         }
         <button id="like-button" data-item-id="@Model.Id" type="button" class="btn btn-light d-inline">
             <div id="like-icon" class="d-inline">
@@ -92,7 +96,9 @@
 else
 {
     <div class="alert alert-info" role="alert">
-        <p>@Loc["You need"] <a href="@Url.Action("Login", "Account")">@Loc["Login"]</a> @Loc["send comments"]</p>
+        <p>
+            @Loc["You need"] <a href="@Url.Action("Login", "Account")">@Loc["Login"]</a> @Loc["send comments"]
+        </p>
     </div>
 }
 

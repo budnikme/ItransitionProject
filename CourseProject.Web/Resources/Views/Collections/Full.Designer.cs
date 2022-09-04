@@ -168,6 +168,15 @@ namespace CourseProject.Web.Resources.Views.Collections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no items.
         /// </summary>
         internal static string There_are_no_items {
@@ -182,6 +191,15 @@ namespace CourseProject.Web.Resources.Views.Collections {
         internal static string Topic {
             get {
                 return ResourceManager.GetString("Topic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

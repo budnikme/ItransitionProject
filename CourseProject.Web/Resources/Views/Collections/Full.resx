@@ -60,4 +60,10 @@
     <data name="DownloadCsv" xml:space="preserve">
         <value>Download as CSV</value>
     </data>
+    <data name="Yes" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+    <data name="No" xml:space="preserve">
+        <value>No</value>
+    </data>
 </root>

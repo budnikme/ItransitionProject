@@ -66,7 +66,21 @@
                         <p class="card-text">@Loc["Author"]: @item.UserName</p>
                         @foreach (var field in item.CustomFields)
                         {
-                            <p class="card-text">@field.Key: @field.Value.Value</p>
+                            if (field.Value.Type == "checkbox")
+                            {
+                                if (field.Value.Value == "on")
+                                {
+                                    <p class="card-text">@field.Key: @Loc["Yes"]</p>
+                                }
+                                else
+                                {
+                                    <p class="card-text">@field.Key: @Loc["No"]</p>
+                                }
+                            }
+                            else
+                            {
+                                <p class="card-text">@field.Key: @field.Value.Value</p>
+                            }
                         }
                         @if (User.IsInRole("Admin") || item.IsOwner)
                         {
